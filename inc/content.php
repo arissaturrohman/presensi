@@ -54,9 +54,13 @@ if ($page == 'siswa') {
     include "page/absen/delete.php";
   }
 }
- elseif ($page == 'laporan') {
+ elseif ($page == 'harian') {
   if ($action == '') {
-    include "page/laporan/laporan.php";
+    include "page/laporan/harian.php";
+  }
+}elseif ($page == 'bulanan') {
+  if ($action == '') {
+    include "page/laporan/bulanan.php";
   }
 }
  else {

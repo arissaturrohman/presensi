@@ -84,7 +84,7 @@ if (isset($_POST['cari'])) {
               <tr>
                 <td><?= $no++; ?></td>
                 <td>
-                  <input type="hidden" name="id_siswa[]" value="<?= $id_siswa; ?>">
+                  <input type="text" name="nisn[]" value="<?= $result['nisn']; ?>">
                   <?= $result['nisn']; ?>
                 </td>
                 <td><?= $result['nama_siswa']; ?></td>
@@ -95,7 +95,7 @@ if (isset($_POST['cari'])) {
                 while ($resultKelas = $kelas->fetch_assoc()) {
                 ?>
                   <td>
-                    <input type="hidden" name="id_kelas[]" value="<?= $resultKelas['id_kelas']; ?>">
+                    <!-- <input type="hidden" name="id_kelas[]" value="<?= $resultKelas['id_kelas']; ?>"> -->
                     <?= $resultKelas['kelas']; ?>
                   </td>
                 <?php } ?>
@@ -106,7 +106,7 @@ if (isset($_POST['cari'])) {
                 while ($resultjurusan = $jurusan->fetch_assoc()) {
                 ?>
                   <td>
-                    <input type="hidden" name="id_jurusan[]" value="<?= $resultjurusan['id_jurusan']; ?>">
+                    <!-- <input type="hidden" name="id_jurusan[]" value="<?= $resultjurusan['id_jurusan']; ?>"> -->
                     <?= $resultjurusan['jurusan']; ?>
                   </td>
                 <?php } ?>
@@ -124,17 +124,17 @@ if (isset($_POST['cari'])) {
                   <input type="radio" name="absen[<?= $result['id_siswa']; ?>]" value="alpa">
                 </td>
                 <td>
-                  <input type="text" name="ket[<?= $result['id_siswa']; ?>]" class="form-control">
+                  <input type="text" name="ket[]" class="form-control">
                 </td>
+                <input type="text" name="tgl[]" value="<?= date('Y-m-d'); ?>" class="form-control">
               </tr>
             <?php } ?>
           </tbody>
         </table>
         <?php
-        $sql1 = $conn->query("SELECT COUNT(id_siswa) FROM tb_siswa WHERE id_kelas = '$cariKelas' AND id_jurusan = '$cariJurusan'");
+        $sql1 = $conn->query("SELECT COUNT(nisn) FROM tb_siswa WHERE id_kelas = '$cariKelas' AND id_jurusan = '$cariJurusan'");
         while ($data = $sql1->fetch_assoc()) {
-          $jumlah = $data['COUNT(id_siswa)'];
-          // echo $jumlah;
+          $jumlah = $data['COUNT(nisn)'];
         }
         ?>
       </div>
@@ -149,31 +149,30 @@ if (isset($_POST['cari'])) {
 if (isset($_POST['add'])) {
 
   $id_siswa = $_POST['id_siswa'];
-  // $jumlahSiswa = count($id_siswa);
   $id_kelas = $_POST['id_kelas'];
   $id_jurusan = $_POST['id_jurusan'];
   $hadir = $_POST['absen'];
   $ket = $_POST['ket'];
-  $tgl = date('Y-m-d');
-  $nisn = $_POST['count'];
+  $tgl = $_POST['tgl'];
+  $jum = $_POST['count'];
+  $nisn = $_POST['nisn'];
 
+ 
+  $i = 0;
   foreach ($hadir as $key) {
+    $addPresensi = $conn->query("INSERT INTO tb_presensi (nisn,presensi,tgl_presensi, ket) VALUES ('$nisn[$i]','$key','$tgl[$i]', '$ket[$i]')");
+    $i++;
   }
-  for ($i = 0; $i < $_POST['count']; $i++) {
-      $addPresensi = $conn->query("INSERT INTO tb_presensi (id_siswa, id_kelas, id_jurusan, presensi, tgl_presensi) VALUES ('$id_siswa[$i]', '$id_kelas[$i]', '$id_jurusan[$i]', '$key[$key]', '$tgl')");
-    }
 
 
 
   if ($addPresensi) {
 ?>
     <script>
-      alert("Data Siswa berhasil ditambah");
+      alert("Data Absensi berhasil ditambah");
       window.location.href = "absen";
     </script>
 <?php
-  } else {
-    echo mysqli_errno($addPresensi);
   }
 }
 
