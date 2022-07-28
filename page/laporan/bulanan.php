@@ -97,9 +97,35 @@ $bulan = [
             <th rowspan="2" width="3%" class="align-middle text-center">No</th>
             <th rowspan="2" class="align-middle text-center">NISN</th>
             <th rowspan="2" class="align-middle text-center">Nama</th>
-            <th colspan="4" class="align-middle text-center">Presensi</th>
+            <?php
+
+            $tahun = date('Y'); //Mengambil tahun saat ini
+            $bulan = date($cariBulan); //Mengambil bulan saat ini
+            $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+            for ($i = 1; $i < $tanggal + 1; $i++) {
+              // echo $i . " ";
+              // echo "<th rowspan='$i' class='align-middle text-center'>Presensi</th>";
+
+            }
+            ?>
+
+              <th colspan="<?= $i; ?>" class="align-middle text-center">Rekap</th>
+            
+            <th colspan="5" class="align-middle text-center">Rekap</th>
           </tr>
           <tr>
+            <?php
+
+            $tahun = date('Y'); //Mengambil tahun saat ini
+            $bulan = date($cariBulan); //Mengambil bulan saat ini
+            $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+            for ($i = 1; $i < $tanggal + 1; $i++) {
+              // echo $i . " ";
+              echo "<th class='align-middle text-center'>$i</th>";
+            }
+            ?>
             <th class="align-middle text-center">H</th>
             <th class="align-middle text-center">I</th>
             <th class="align-middle text-center">S</th>
