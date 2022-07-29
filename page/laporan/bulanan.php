@@ -56,6 +56,35 @@
 </form>
 
 <?php
+//default time zone
+date_default_timezone_set("Asia/Jakarta");
+//fungsi check tanggal merah
+function tanggalMerah($value) {
+	$array = json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"),true);
+
+	//check tanggal merah berdasarkan libur nasional
+	if(isset($array[$value]))
+:		echo"tanggal merah ".$array[$value]["deskripsi"];
+
+	//check tanggal merah berdasarkan hari minggu
+	elseif(
+date("D",strtotime($value))==="Sun")
+:		echo"tanggal merah hari minggu";
+
+	//bukan tanggal merah
+	else
+		:echo"bukan tanggal merah";
+	endif;
+}
+
+//testing
+// $hari_ini = date("Ymd");
+
+// echo"<b>Check untuk hari ini (".date("d-m-Y",strtotime($hari_ini)).")</b><br>";
+// tanggalMerah($hari_ini);
+?>
+
+<?php
 if (isset($_POST['cari'])) {
   $cariKelas = $_POST['cariKelas'];
   $cariJurusan = $_POST['cariJurusan'];
@@ -92,6 +121,15 @@ $bulan = [
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <div class="dropdown mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          Export
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" target="blank" href="excel.php?kelas=<?= $cariKelas; ?>&jurusan=<?= $cariJurusan; ?>&bulan=<?= $cariBulan; ?>">Excel</a>
+          <a class="dropdown-item" href="pdf.php?kelas=<?= $cariKelas; ?>&jurusan=<?= $cariJurusan; ?>&bulan=<?= $cariBulan; ?>">PDF</a>
+        </div>
+      </div>
         <thead>
           <tr>
             <th rowspan="2" width="3%" class="align-middle text-center">No</th>
@@ -110,26 +148,28 @@ $bulan = [
             }
             ?>
 
-              <th colspan="<?= $i; ?>" class="align-middle text-center">Rekap</th>
+              <!-- <th colspan="<?= $i; ?>" class="align-middle text-center">Rekap</th> -->
             
-            <th colspan="5" class="align-middle text-center">Rekap</th>
+            <th colspan="4" class="align-middle text-center">Rekap</th>
+            <th rowspan="2"  class="align-middle text-center">Jumlah</th>
           </tr>
           <tr>
             <?php
 
-            $tahun = date('Y'); //Mengambil tahun saat ini
-            $bulan = date($cariBulan); //Mengambil bulan saat ini
-            $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+            // $tahun = date('Y'); //Mengambil tahun saat ini
+            // $bulan = date($cariBulan); //Mengambil bulan saat ini
+            // $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 
-            for ($i = 1; $i < $tanggal + 1; $i++) {
-              // echo $i . " ";
-              echo "<th class='align-middle text-center'>$i</th>";
-            }
+            // for ($i = 1; $i < $tanggal + 1; $i++) {
+            //   echo "<th class='align-middle text-center'>$i</th>";
+            // }
+            // echo "<th class='align-middle text-center'></th>";
             ?>
             <th class="align-middle text-center">H</th>
             <th class="align-middle text-center">I</th>
             <th class="align-middle text-center">S</th>
             <th class="align-middle text-center">A</th>
+           
           </tr>
 
         </thead>
@@ -174,10 +214,28 @@ $bulan = [
                 $dataalpa = $alpa->fetch_assoc();
 
                 ?>
+                 <?php
+
+                  // $tahun = date('Y'); //Mengambil tahun saat ini
+                  // $bulan = date($cariBulan); //Mengambil bulan saat ini
+                  // $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+                  // for ($i = 1; $i < $tanggal + 1; $i++) {    
+                  //   if ($hari_ini == $i) {
+                  //     echo "<th class='align-middle text-center'>$presensi</th>";                    
+                  //   }
+                  // }
+
+                   // hitung jumlah
+                $alpa = $conn->query("SELECT COUNT(*) AS jumlah FROM tb_presensi WHERE presensi = '$presensi' AND nisn = '$nisn' ORDER BY nisn");
+                $datajumlah = $alpa->fetch_assoc();
+                    
+                  ?>
                 <td><?= $dataHadir['hadir'];  ?></td>
                 <td><?= $dataijin['ijin'];  ?></td>
                 <td><?= $datasakit['sakit'];  ?></td>
                 <td><?= $dataalpa['alpa'];  ?></td>
+                <td><?= $datajumlah['jumlah'];  ?></td>
               </tr>
           <?php }
           } ?>
