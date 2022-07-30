@@ -94,6 +94,7 @@ $bulan = [
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
+            
             <th rowspan="2" width="3%" class="align-middle text-center">No</th>
             <th rowspan="2" class="align-middle text-center">NISN</th>
             <th rowspan="2" class="align-middle text-center">Nama</th>
@@ -104,15 +105,12 @@ $bulan = [
             $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 
             for ($i = 1; $i < $tanggal + 1; $i++) {
-              // echo $i . " ";
-              // echo "<th rowspan='$i' class='align-middle text-center'>Presensi</th>";
-
             }
             ?>
 
-              <th colspan="<?= $i; ?>" class="align-middle text-center">Rekap</th>
-            
-            <th colspan="5" class="align-middle text-center">Rekap</th>
+            <th colspan="<?= $i; ?>" class="align-middle text-center">Presensi</th>
+
+            <th colspan="4" class="align-middle text-center">Rekap</th>
           </tr>
           <tr>
             <?php
@@ -125,6 +123,7 @@ $bulan = [
               // echo $i . " ";
               echo "<th class='align-middle text-center'>$i</th>";
             }
+            echo "<th colspan='1' class='align-middle text-center'></th>";
             ?>
             <th class="align-middle text-center">H</th>
             <th class="align-middle text-center">I</th>
@@ -174,6 +173,21 @@ $bulan = [
                 $dataalpa = $alpa->fetch_assoc();
 
                 ?>
+                <?php
+
+                $tahun = date('Y'); //Mengambil tahun saat ini
+                $bulan = date($cariBulan); //Mengambil bulan saat ini
+                $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+                for ($i = 1; $i < $tanggal + 1; $i++) {
+
+                  echo "<td>$presensi</td>";
+                }
+                //   foreach ($presensi as $key) {
+                //     echo "<td>$key</td>";
+                // }
+                ?>
+                <td></td>
                 <td><?= $dataHadir['hadir'];  ?></td>
                 <td><?= $dataijin['ijin'];  ?></td>
                 <td><?= $datasakit['sakit'];  ?></td>
