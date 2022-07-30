@@ -4,9 +4,10 @@ include('inc/config.php');
 if (isset($_POST['daftar'])) {
   $nama = mysqli_real_escape_string($conn, $_POST['nama']);
   $username = mysqli_real_escape_string($conn, $_POST['username']);
+  $role = mysqli_real_escape_string($conn, $_POST['role']);
   $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-  $sql = $conn->query("INSERT INTO tb_user (username, password, nama) VALUES ('$username', '$password', '$nama')");
+  $sql = $conn->query("INSERT INTO tb_user (username, password, nama_user, role) VALUES ('$username', '$password', '$nama', '$role')");
 
   if ($sql) {
     ?>
@@ -32,11 +33,11 @@ if (isset($_POST['daftar'])) {
   <title>Daftar</title>
 
   <!-- Custom fonts for this template-->
-  <link href="../asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="../asset/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -69,6 +70,12 @@ if (isset($_POST['daftar'])) {
                     <div class="form-group">
                       <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
                     </div>
+                    <div class="form-group">
+                      <select name="role" id="role" class="form-control">
+                        <option value="admin">Admin</option>
+                        <option value="guru">Guru</option>
+                      </select>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block" name="daftar">Daftar</button>
                   </form>
                 </div>
@@ -84,14 +91,14 @@ if (isset($_POST['daftar'])) {
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../asset/vendor/jquery/jquery.min.js"></script>
-  <script src="../asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="../asset/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="../asset/js/sb-admin-2.min.js"></script>
+  <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

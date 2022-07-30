@@ -36,8 +36,8 @@ if ($page == 'siswa') {
 }  elseif ($page == 'user') {
   if ($action == '') {
     include "page/user/user.php";
-  }  elseif ($action == 'add') {
-    include "page/user/add.php";
+  }  elseif ($action == 'ganti') {
+    include "page/user/ganti_pass.php";
   } elseif ($action == 'edit') {
     include "page/user/edit.php";
   } elseif ($action == 'delete') {

@@ -56,35 +56,6 @@
 </form>
 
 <?php
-//default time zone
-date_default_timezone_set("Asia/Jakarta");
-//fungsi check tanggal merah
-function tanggalMerah($value) {
-	$array = json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"),true);
-
-	//check tanggal merah berdasarkan libur nasional
-	if(isset($array[$value]))
-:		echo"tanggal merah ".$array[$value]["deskripsi"];
-
-	//check tanggal merah berdasarkan hari minggu
-	elseif(
-date("D",strtotime($value))==="Sun")
-:		echo"tanggal merah hari minggu";
-
-	//bukan tanggal merah
-	else
-		:echo"bukan tanggal merah";
-	endif;
-}
-
-//testing
-// $hari_ini = date("Ymd");
-
-// echo"<b>Check untuk hari ini (".date("d-m-Y",strtotime($hari_ini)).")</b><br>";
-// tanggalMerah($hari_ini);
-?>
-
-<?php
 if (isset($_POST['cari'])) {
   $cariKelas = $_POST['cariKelas'];
   $cariJurusan = $_POST['cariJurusan'];
@@ -136,52 +107,14 @@ $bulan = [
             <th rowspan="2" width="3%" class="align-middle text-center">No</th>
             <th rowspan="2" class="align-middle text-center">NISN</th>
             <th rowspan="2" class="align-middle text-center">Nama</th>
-            <?php
-
-            $tahun = date('Y'); //Mengambil tahun saat ini
-            $bulan = date($cariBulan); //Mengambil bulan saat ini
-            $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-
-            for ($i = 1; $i < $tanggal + 1; $i++) {
-            }
-            ?>
-
-<<<<<<< HEAD
-            <th colspan="<?= $i; ?>" class="align-middle text-center">Presensi</th>
-
-            <th colspan="4" class="align-middle text-center">Rekap</th>
-=======
-              <!-- <th colspan="<?= $i; ?>" class="align-middle text-center">Rekap</th> -->
-            
-            <th colspan="4" class="align-middle text-center">Rekap</th>
+            <th colspan="4" class="align-middle text-center">Presensi</th>
             <th rowspan="2"  class="align-middle text-center">Jumlah</th>
->>>>>>> 4b424f3e6a74fe22de0956fe2deb4e9ba4bc3649
           </tr>
           <tr>
-            <?php
-
-            // $tahun = date('Y'); //Mengambil tahun saat ini
-            // $bulan = date($cariBulan); //Mengambil bulan saat ini
-            // $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-
-<<<<<<< HEAD
-            for ($i = 1; $i < $tanggal + 1; $i++) {
-              // echo $i . " ";
-              echo "<th class='align-middle text-center'>$i</th>";
-            }
-            echo "<th colspan='1' class='align-middle text-center'></th>";
-=======
-            // for ($i = 1; $i < $tanggal + 1; $i++) {
-            //   echo "<th class='align-middle text-center'>$i</th>";
-            // }
-            // echo "<th class='align-middle text-center'></th>";
->>>>>>> 4b424f3e6a74fe22de0956fe2deb4e9ba4bc3649
-            ?>
             <th class="align-middle text-center">H</th>
             <th class="align-middle text-center">I</th>
             <th class="align-middle text-center">S</th>
-            <th class="align-middle text-center">A</th>
-           
+            <th class="align-middle text-center">A</th>           
           </tr>
 
         </thead>
@@ -225,42 +158,11 @@ $bulan = [
                 $alpa = $conn->query("SELECT COUNT(*) AS alpa FROM tb_presensi WHERE presensi = 'alpa' AND nisn = '$nisn' ORDER BY nisn");
                 $dataalpa = $alpa->fetch_assoc();
 
-                ?>
-<<<<<<< HEAD
-                <?php
-
-                $tahun = date('Y'); //Mengambil tahun saat ini
-                $bulan = date($cariBulan); //Mengambil bulan saat ini
-                $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-
-                for ($i = 1; $i < $tanggal + 1; $i++) {
-
-                  echo "<td>$presensi</td>";
-                }
-                //   foreach ($presensi as $key) {
-                //     echo "<td>$key</td>";
-                // }
-                ?>
-                <td></td>
-=======
-                 <?php
-
-                  // $tahun = date('Y'); //Mengambil tahun saat ini
-                  // $bulan = date($cariBulan); //Mengambil bulan saat ini
-                  // $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
-
-                  // for ($i = 1; $i < $tanggal + 1; $i++) {    
-                  //   if ($hari_ini == $i) {
-                  //     echo "<th class='align-middle text-center'>$presensi</th>";                    
-                  //   }
-                  // }
-
-                   // hitung jumlah
+                // hitung jumlah
                 $alpa = $conn->query("SELECT COUNT(*) AS jumlah FROM tb_presensi WHERE presensi = '$presensi' AND nisn = '$nisn' ORDER BY nisn");
                 $datajumlah = $alpa->fetch_assoc();
                     
                   ?>
->>>>>>> 4b424f3e6a74fe22de0956fe2deb4e9ba4bc3649
                 <td><?= $dataHadir['hadir'];  ?></td>
                 <td><?= $dataijin['ijin'];  ?></td>
                 <td><?= $datasakit['sakit'];  ?></td>
