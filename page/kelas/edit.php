@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-5">
+  <h1 class="h3 mb-4 text-gray-800">Form Edit Kelas</h1>
     <div class="card mb-4 py-3 border-left-primary">
       <div class="card-body">
         <?php
