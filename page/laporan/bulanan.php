@@ -90,8 +90,18 @@
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <div class="dropdown mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+          Export
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" target="blank" href="excel.php?kelas=<?= $cariKelas; ?>&jurusan=<?= $cariJurusan; ?>&bulan=<?= $cariBulan; ?>">Excel</a>
+          <a class="dropdown-item" href="pdf.php?kelas=<?= $cariKelas; ?>&jurusan=<?= $cariJurusan; ?>&bulan=<?= $cariBulan; ?>">PDF</a>
+        </div>
+      </div>
         <thead>
           <tr>
+            
             <th rowspan="2" width="3%" class="align-middle text-center">No</th>
             <th rowspan="2" class="align-middle text-center">NISN</th>
             <th rowspan="2" class="align-middle text-center">Nama</th>
@@ -121,7 +131,7 @@
             <th class="align-middle text-center">H</th>
             <th class="align-middle text-center">I</th>
             <th class="align-middle text-center">S</th>
-            <th class="align-middle text-center">A</th>
+            <th class="align-middle text-center">A</th>           
           </tr>
 
         </thead>

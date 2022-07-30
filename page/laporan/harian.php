@@ -30,6 +30,11 @@
         </select>
       </div>
     </div>
+    <div class="col-2">
+      <div class="form-group">
+        <input type="date" name="cariTanggal" class="form-control" id="">
+      </div>
+    </div>
     <div class="col-1">
       <button type="submit" name="cari" class="btn btn-success">Pilih</button>
     </div>
@@ -40,6 +45,7 @@
 if (isset($_POST['cari'])) {
   $cariKelas = $_POST['cariKelas'];
   $cariJurusan = $_POST['cariJurusan'];
+  $cariTanggal = $_POST['cariTanggal'];
 
   $sqlKelas = $conn->query("SELECT * FROM tb_kelas WHERE id_kelas = '$cariKelas'");
   $dataKelas = $sqlKelas->fetch_assoc();
@@ -63,6 +69,7 @@ if (isset($_POST['cari'])) {
             <th class="align-middle text-center">NISN</th>
             <th class="align-middle text-center">Nama</th>
             <th class="align-middle text-center">Presensi</th>
+            <th class="align-middle text-center">Keterangan</th>
           </tr>
 
         </thead>
@@ -75,11 +82,12 @@ if (isset($_POST['cari'])) {
             $nisn = $result['nisn'];
 
 
-            $absen = $conn->query("SELECT * FROM tb_presensi WHERE nisn = '$nisn' AND tgl_presensi = '$hari_ini'");
+            $absen = $conn->query("SELECT * FROM tb_presensi WHERE nisn = '$nisn' AND tgl_presensi = '$cariTanggal'");
             while ($resultAbsen = $absen->fetch_assoc()) {
               $nisn = $result['nisn'];
               $presensi = $resultAbsen['presensi'];
               $nama = $result['nama_siswa'];
+              $ket = $resultAbsen['ket'];
 
           ?>
               <tr>
@@ -87,6 +95,7 @@ if (isset($_POST['cari'])) {
                 <td><?= $nisn; ?></td>
                 <td><?= $nama; ?></td>
                 <td><?= $presensi; ?></td>
+                <td><?= $ket; ?></td>
               </tr>
           <?php }
           } ?>

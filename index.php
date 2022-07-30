@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION["login"])) {
+  header("Location: login.php");
+  exit;
+}
+
+error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 error_reporting(0);
 include("inc/config.php");
 ?>
@@ -13,7 +20,7 @@ include("inc/config.php");
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Blank</title>
+  <title>Aplikasi Absensi SMK Al-Amin Bonang</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -75,6 +82,7 @@ include("inc/config.php");
             <a class="collapse-item" href="siswa">Siswa</a>
             <a class="collapse-item" href="kelas">Kelas</a>
             <a class="collapse-item" href="jurusan">Jurusan</a>
+            <a class="collapse-item" href="user">User</a>
           </div>
         </div>
       </li>
@@ -134,16 +142,20 @@ include("inc/config.php");
           <ul class="navbar-nav ml-auto">
 
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+            <!-- <div class="topbar-divider d-none d-sm-block"></div> -->
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['nama_user']; ?></span>
+                <img class="img-profile rounded-circle" src="img/user.png">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="?page=user&action=ganti&id=<?= $_SESSION['id_user']; ?>">
+                  <i class="fas fa-lock-open fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Ganti Password
+                </a>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
@@ -171,7 +183,7 @@ include("inc/config.php");
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; SMK AL-Amin Bonang <?= date("Y"); ?></span>
           </div>
         </div>
       </footer>
@@ -201,7 +213,7 @@ include("inc/config.php");
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>
